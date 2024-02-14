@@ -8,20 +8,32 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios_inscriben_proyectos")
-public class UsuarioInscribeEnProyecto {
-    @EmbeddedId
-    private UsuarioProyectoId id;
+@Table(name = "usuario_habilidad")
+public class UsuarioTieneHabilidad {
+	
+	@EmbeddedId
+    private UsuarioHabilidadId id;
 
     @ManyToOne
     @MapsId("idUsuario")
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne
-    @MapsId("idProyecto")
-    @JoinColumn(name = "id_proyecto")
-    private Proyecto proyecto;
+	public UsuarioHabilidadId getId() {
+		return id;
+	}
+
+	public void setId(UsuarioHabilidadId id) {
+		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+    
 
 }
-
