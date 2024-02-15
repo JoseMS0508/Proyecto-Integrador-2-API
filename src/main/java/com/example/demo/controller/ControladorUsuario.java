@@ -25,7 +25,7 @@ public class ControladorUsuario {
     @PostMapping("/guardar")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
         Usuario usuarioGuardado = usuarioService.guardarOActualizarUsuario(usuario);
-        return ResponseEntity.ok(Map.of("mensaje", "Usuario creado con éxito", "id", usuarioGuardado.getId()));
+        return ResponseEntity.ok(Map.of("mensaje", "Usuario creado con éxito", "id", usuarioGuardado.getId_usuario()));
     }
 
     // Endpoint para obtener todos los usuarios
