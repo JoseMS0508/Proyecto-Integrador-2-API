@@ -1,21 +1,10 @@
 package com.example.demo.service;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import com.example.demo.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
 import com.example.demo.models.Usuario;
 import com.example.demo.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -23,34 +12,28 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> getAllUsuarios() {
-        List<Usuario> usuarios = new ArrayList<>();
-        usuarioRepository.findAll().forEach(usuarios::add);
-        return usuarios;
-    }
+    @Autowired
+    private SkillRepository skillRepository;
 
-    public Usuario getUsuarioById(int id) {
-        return usuarioRepository.findById(id).orElse(null);
-    }
-
-    public Usuario guardarOActualizarUsuario(Usuario usuario) {
-        // Aquí simplemente guardamos o actualizamos el usuario sin encriptar la contraseña
+    public Usuario crearUsuario(Usuario usuario) {
+        // Aquí podrías manejar lógica como verificar si el usuario ya existe, etc.
         return usuarioRepository.save(usuario);
-    }
-    
-    public boolean verificarCredenciales(String email, String password) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            // Compara directamente la contraseña en texto plano
-            return usuario.getContraseña().equals(password);
-        }
-        return false;
     }
 
     public void eliminarUsuario(int id) {
         usuarioRepository.deleteById(id);
     }
 
-    // Puedes añadir más métodos aquí según necesites
+    public Usuario modificarUsuario(int id, Usuario usuario) {
+        // Asegurarse de que el usuario existe
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        // Aquí copiarías las propiedades de `usuario` a `usuarioExistente`, excepto id
+        return usuarioRepository.save(usuarioExistente);
+    }
+
+    public Usuario buscarPorId(int id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
 }

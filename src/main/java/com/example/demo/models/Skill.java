@@ -1,9 +1,7 @@
 package com.example.demo.models;
 
-
 import java.util.*;
 import jakarta.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "skills")

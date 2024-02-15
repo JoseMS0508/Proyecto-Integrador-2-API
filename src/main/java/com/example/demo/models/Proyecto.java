@@ -1,11 +1,7 @@
 package com.example.demo.models;
 
-
 import java.util.*;
-
 import jakarta.persistence.*;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "proyectos")
@@ -94,5 +90,13 @@ public class Proyecto {
 
     public void setSkillsSolicitadas(Set<Skill> skillsSolicitadas) {
         this.skillsSolicitadas = skillsSolicitadas;
+    }
+
+    public Set<Usuario> getUsuariosInscritos() {
+        return usuariosInscritos;
+    }
+
+    public void setUsuariosInscritos(Set<Usuario> usuariosInscritos) {
+        this.usuariosInscritos = usuariosInscritos;
     }
 }
