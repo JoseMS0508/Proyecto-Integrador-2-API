@@ -1,8 +1,13 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.example.demo.models.Proyecto;
+import com.example.demo.models.Skill;
 import com.example.demo.repository.ProyectoRepository;
+import com.example.demo.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.models.Usuario;
@@ -15,6 +20,9 @@ public class ProyectoService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private SkillRepository skillRepository;
 
     public Proyecto crearProyecto(Proyecto proyecto) {
         // Verificar usuario creador y skills si necesario
@@ -55,6 +63,19 @@ public class ProyectoService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         proyecto.getUsuariosInscritos().remove(usuario);
+        proyectoRepository.save(proyecto);
+    }
+
+    public void añadirHabilidadesAProyecto(int proyectoId, Set<Integer> idsHabilidades) {
+        Proyecto proyecto = proyectoRepository.findById(proyectoId)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        Set<Skill> habilidades = idsHabilidades.stream()
+                .map(id -> skillRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Habilidad no encontrada")))
+                .collect(Collectors.toSet());
+
+        proyecto.getSkillsSolicitadas().addAll(habilidades);
         proyectoRepository.save(proyecto);
     }
 }

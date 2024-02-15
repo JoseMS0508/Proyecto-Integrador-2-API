@@ -4,9 +4,12 @@ package com.example.demo.controller;
 import com.example.demo.models.Proyecto;
 import com.example.demo.service.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/proyectos")
 public class ProyectoController {
@@ -54,5 +57,12 @@ public class ProyectoController {
     @DeleteMapping("/{proyectoId}/desinscribir/{usuarioId}")
     public void desinscribirUsuarioDeProyecto(@PathVariable int proyectoId, @PathVariable int usuarioId) {
         proyectoService.desinscribirUsuario(proyectoId, usuarioId);
+    }
+
+    // Endpoint para añadir habilidades solicitadas a un proyecto
+    @PostMapping("/{proyectoId}/habilidades")
+    public ResponseEntity<?> añadirHabilidadesAProyecto(@PathVariable int proyectoId, @RequestBody Set<Integer> idsHabilidades) {
+        proyectoService.añadirHabilidadesAProyecto(proyectoId, idsHabilidades);
+        return ResponseEntity.ok().build();
     }
 }
