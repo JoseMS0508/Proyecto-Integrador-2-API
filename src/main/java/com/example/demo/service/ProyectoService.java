@@ -70,6 +70,13 @@ public class ProyectoService {
         Proyecto proyecto = proyectoRepository.findById(proyectoId)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
+        // Eliminar todas las habilidades asignadas al proyecto
+        proyecto.getSkillsSolicitadas().clear();
+
+        // Guardar el proyecto sin habilidades asignadas
+        proyectoRepository.save(proyecto);
+
+        // Obtener y asignar las nuevas habilidades
         Set<Skill> habilidades = idsHabilidades.stream()
                 .map(id -> skillRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Habilidad no encontrada")))

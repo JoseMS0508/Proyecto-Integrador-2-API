@@ -42,7 +42,7 @@ public class ProyectoController {
     }
 
     // Ver todos los proyectos
-    @GetMapping
+    @GetMapping("/todos")
     public List<Proyecto> verTodosLosProyectos() {
         return proyectoService.buscarTodos();
     }
@@ -60,7 +60,7 @@ public class ProyectoController {
     }
 
     // Endpoint para añadir habilidades solicitadas a un proyecto
-    @PostMapping("/{proyectoId}/habilidades")
+    @PutMapping("/{proyectoId}/habilidades")
     public ResponseEntity<?> añadirHabilidadesAProyecto(@PathVariable int proyectoId, @RequestBody Set<Integer> idsHabilidades) {
         proyectoService.añadirHabilidadesAProyecto(proyectoId, idsHabilidades);
         return ResponseEntity.ok().build();
