@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -34,6 +36,7 @@ public class Proyecto {
             joinColumns = @JoinColumn(name = "id_proyecto"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario")
     )
+    @JsonIgnore
     private Set<Usuario> usuariosInscritos = new HashSet<>();
 
     public int getIdProyecto() {

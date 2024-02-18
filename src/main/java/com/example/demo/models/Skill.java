@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +15,11 @@ public class Skill {
     private String nombre;
 
     @ManyToMany(mappedBy = "skills")
+    @JsonIgnore
     private Set<Usuario> usuarios = new HashSet<>();
 
     @ManyToMany(mappedBy = "skillsSolicitadas")
+    @JsonIgnore
     private Set<Proyecto> proyectos = new HashSet<>();
 
     public int getId() {

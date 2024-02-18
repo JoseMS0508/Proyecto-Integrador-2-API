@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.models.Usuario;
 import com.example.demo.service.UsuarioService;
 
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -48,5 +49,15 @@ public class ControladorUsuario {
     public ResponseEntity<?> actualizarHabilidadesUsuario(@PathVariable int usuarioId, @RequestBody Set<Integer> idsHabilidades) {
         usuarioService.actualizarHabilidadesUsuario(usuarioId, idsHabilidades);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
+        try {
+            Usuario usuario = usuarioService.login(credenciales.get("email"), credenciales.get("contraseña"));
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

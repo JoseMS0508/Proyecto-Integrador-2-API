@@ -76,4 +76,15 @@ public class UsuarioService {
         usuario.setSkills(nuevasHabilidades);
         usuarioRepository.save(usuario);
     }
+
+    public Usuario login(String email, String contraseña) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("No existe un usuario con el correo proporcionado."));
+
+        if(usuario.getContraseña().equals(contraseña)) {
+            return usuario; // Login exitoso
+        } else {
+            throw new RuntimeException("Contraseña incorrecta.");
+        }
+    }
 }
