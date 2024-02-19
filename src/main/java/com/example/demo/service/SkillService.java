@@ -28,8 +28,6 @@ public class SkillService {
                 .orElseThrow(() -> new RuntimeException("Skill no encontrada con el ID: " + id));
         
         skill.setNombre(skillDetalles.getNombre());
-        // Aquí se pueden añadir más campos si la entidad Skill tiene más información que actualizar
-        
         return skillRepository.save(skill);
     }
 

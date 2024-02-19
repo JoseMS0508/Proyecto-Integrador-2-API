@@ -6,6 +6,4 @@ import com.example.demo.models.Proyecto;
 
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
-    // Aquí puedes añadir métodos personalizados si es necesario,
-    // por ejemplo, buscar proyectos por nombre, usuario creador, etc.
 }

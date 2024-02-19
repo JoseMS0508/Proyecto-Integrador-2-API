@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.models.Proyecto;
+import com.example.demo.models.Skill;
 import com.example.demo.service.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,5 +65,16 @@ public class ProyectoController {
     public ResponseEntity<?> añadirHabilidadesAProyecto(@PathVariable int proyectoId, @RequestBody Set<Integer> idsHabilidades) {
         proyectoService.añadirHabilidadesAProyecto(proyectoId, idsHabilidades);
         return ResponseEntity.ok().build();
+    }
+
+    // Nuevo endpoint para obtener las skills de un proyecto específico
+    @GetMapping("/{idProyecto}/skills")
+    public ResponseEntity<Set<Skill>> obtenerSkillsDeProyecto(@PathVariable int idProyecto) {
+        Set<Skill> skills = proyectoService.obtenerSkillsDeProyecto(idProyecto);
+        if (skills != null && !skills.isEmpty()) {
+            return new ResponseEntity<>(skills, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

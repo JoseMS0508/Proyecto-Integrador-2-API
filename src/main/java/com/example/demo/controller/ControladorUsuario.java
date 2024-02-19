@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.models.Skill;
 import com.example.demo.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.models.Usuario;
@@ -11,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/usuarios") // Ajusta la ruta según tu estructura de API
+@RequestMapping("/api/usuarios")
 public class ControladorUsuario {
 
     @Autowired
@@ -58,6 +60,16 @@ public class ControladorUsuario {
             return ResponseEntity.ok(usuario);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{idUsuario}/skills")
+    public ResponseEntity<Set<Skill>> obtenerSkillsDeUsuario(@PathVariable int idUsuario) {
+        Set<Skill> skills = usuarioService.obtenerSkillsDeUsuario(idUsuario);
+        if (skills != null && !skills.isEmpty()) {
+            return new ResponseEntity<>(skills, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

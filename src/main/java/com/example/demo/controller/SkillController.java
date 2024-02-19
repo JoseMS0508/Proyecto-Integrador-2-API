@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills") // Ajusta la ruta según tu estructura de API
+@RequestMapping("/api/skills")
 public class SkillController {
 
     @Autowired

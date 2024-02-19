@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -84,5 +85,10 @@ public class ProyectoService {
 
         proyecto.getSkillsSolicitadas().addAll(habilidades);
         proyectoRepository.save(proyecto);
+    }
+
+    public Set<Skill> obtenerSkillsDeProyecto(int idProyecto) {
+        Optional<Proyecto> proyecto = proyectoRepository.findById(idProyecto);
+        return proyecto.map(Proyecto::getSkillsSolicitadas).orElse(null);
     }
 }

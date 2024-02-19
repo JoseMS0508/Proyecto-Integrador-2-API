@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.models.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,6 @@ public class UsuarioService {
     private SkillRepository skillRepository;
 
     public Usuario crearUsuario(Usuario usuario) {
-        // Aquí podrías manejar lógica como verificar si el usuario ya existe, etc.
         return usuarioRepository.save(usuario);
     }
 
@@ -82,9 +82,14 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("No existe un usuario con el correo proporcionado."));
 
         if(usuario.getContraseña().equals(contraseña)) {
-            return usuario; // Login exitoso
+            return usuario;
         } else {
             throw new RuntimeException("Contraseña incorrecta.");
         }
+    }
+
+    public Set<Skill> obtenerSkillsDeUsuario(int idUsuario) {
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+        return usuario.map(Usuario::getSkills).orElse(null);
     }
 }
